@@ -4,7 +4,6 @@ import escapeRegExp from 'escape-string-regexp';
 import { Link } from 'react-router-dom';
 
 import Book from './Book';
-import './App.css';
 
 class BookSearch extends React.Component {
   state = {
