@@ -3,25 +3,23 @@ import { Link } from 'react-router-dom';
 
 import Book from './Book';
 
-class BookShelves extends React.Component {
+class BookShelf extends React.Component {
 
   render(){
     const { books } = this.props;
-    const currentlyReading = books.filter( book => book.shelf === 'currentlyReading');
-    const wantToRead = books.filter( book => book.shelf === 'wantToRead');
-    const read = books.filter( book => book.shelf === 'read');
-
-    console.log(read);
+    const currentlyReadingShelf = books.filter( book => book.shelf === 'currentlyReading');
+    const wantToReadShelf = books.filter( book => book.shelf === 'wantToRead');
+    const readShelf = books.filter( book => book.shelf === 'read');
 
     return (
       <div>
         <div className='list-books-title'>
           <h1>
-            Currently Reading
+            MyReads
           </h1>
         </div>
         {
-          currentlyReading.length > 0 && (
+          currentlyReadingShelf.length > 0 && (
             <div className='bookshelf'>
               <div className='bookshelf-title'>
                 <h2>
@@ -30,9 +28,9 @@ class BookShelves extends React.Component {
               </div>
               <div className='bookshelf-books'>
                 <ol className='books-grid'>
-                  { currentlyReading.map(book => (
+                  { currentlyReadingShelf.map(book => (
                     <li key={ book.id }>
-                      <Book book={ book }/>
+                      <Book book={ book } onChangeBookShelf={ this.props.onChangeBookShelf }/>
                     </li>
                   ))}
                 </ol>
@@ -41,7 +39,7 @@ class BookShelves extends React.Component {
           )
         }
         {
-          wantToRead.length > 0 && (
+          wantToReadShelf.length > 0 && (
             <div className='bookshelf'>
               <div className='bookshelf-title'>
                 <h2>
@@ -50,9 +48,9 @@ class BookShelves extends React.Component {
               </div>
               <div className='bookshelf-books'>
                 <ol className='books-grid'>
-                  { wantToRead.map(book => (
+                  { wantToReadShelf.map(book => (
                     <li key={ book.id }>
-                      <Book book={ book }/>
+                      <Book book={ book } onChangeBookShelf={ this.props.onChangeBookShelf }/>
                     </li>
                   ))}
                 </ol>
@@ -61,7 +59,7 @@ class BookShelves extends React.Component {
           )
         }
         {
-          read.length > 0 && (
+          readShelf.length > 0 && (
             <div className='bookshelf'>
               <div className='bookshelf-title'>
                 <h2>
@@ -69,10 +67,11 @@ class BookShelves extends React.Component {
                 </h2>
               </div>
               <div className='bookshelf-books'>
+                {/* <div><Book book={ books[0] } value={ books[0].shelf } onChangeBookShelf={ this.props.onChangeBookShelf.bind(this) }/></div> */}
                 <ol className='books-grid'>
-                  { read.map(book => (
+                  { readShelf.map(book => (
                     <li key={ book.id }>
-                      <Book book={ book }/>
+                      <Book book={ book } onChangeBookShelf={ this.props.onChangeBookShelf.bind(this) }/>
                     </li>
                   ))}
                 </ol>
@@ -89,4 +88,4 @@ class BookShelves extends React.Component {
   }
 }
 
-export default BookShelves;
+export default BookShelf;

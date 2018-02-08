@@ -5,15 +5,30 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 
 import BookSearch from './BookSearch';
-import BookShelves from './BookShelves';
+import BookShelf from './BookShelf';
 
 class BooksApp extends React.Component {
-  state = {
-    books: [],
+  constructor(props, context){
+    super(props, context);
+
+    this._changeBookShelf = this._changeBookShelf.bind(this);
+    this.state = {
+      books: [],
+    }
   }
 
   componentDidMount(){
     BooksAPI.getAll().then(books => this.setState({ books: books }));
+  }
+
+  _changeBookShelf(book, newShelf){
+    this.setState((prevState)=> {
+      let changeBook = prevState.books.find(stateBook => stateBook.id === book.id);
+      changeBook.shelf = newShelf;
+
+      return changeBook;
+    });
+    BooksAPI.update(book, newShelf);
   }
 
   render() {
@@ -21,10 +36,10 @@ class BooksApp extends React.Component {
     return (
       <div>
         <Route exact path='/' render={() => (
-          <BookShelves books={ books }/>
+          <BookShelf books={ books } onChangeBookShelf={ this._changeBookShelf } />
         )}/>
         <Route path='/search' render={() => (
-          <BookSearch books={ books }/>
+          <BookSearch books={ books } onChangeBookShelf={ this._changeBookShelf}/>
         )}/>
       </div>
     )
