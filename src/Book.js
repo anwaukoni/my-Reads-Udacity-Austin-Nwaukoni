@@ -1,18 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import debounce from 'lodash/debounce';
+// import throttle from 'lodash/throttle';
 
+// TODO: Comment on component
 class Book extends React.Component {
   constructor(props, context){
     super(props, context);
-    this._onChange = this._onChange.bind(this);
+
     this.state = {
       value: this.props.book.shelf
     }
+    this._onChange = this._onChange.bind(this);
+    // this._debounceOnSearch = debounce(this.props.onChangeBookShelf,  5000);
   }
 
+  // TODO: Comment on function
   _onChange(event){
     this.setState({value: event.target.value});
     this.props.onChangeBookShelf(this.props.book, event.target.value);
+    // this._debounceOnSearch(this.props.book, event.target.value);
   }
 
   render() {

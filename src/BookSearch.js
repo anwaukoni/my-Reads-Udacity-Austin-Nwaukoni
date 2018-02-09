@@ -2,28 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import escapeRegExp from 'escape-string-regexp';
 import { Link } from 'react-router-dom';
+import debounce from 'lodash/debounce'
 
 import Book from './Book';
 
 class BookSearch extends React.Component {
-  state = {
-    query: ''
+  constructor(props, context){
+    super(props, context);
+    this.state = {
+      query: ''
+    }
+    this._debounceOnSearch = debounce(this.props.onSearch,  2000);
   }
 
-  _updateQuery(event){
+  _updateQuery(event) {
     this.setState({ query: event.target.value });
+    this._debounceOnSearch(event.target.value);
   }
 
+  // TODO: Comment on rendering
   render() {
     const { books } = this.props;
     const { query } = this.state;
     let showingBooks;
 
-    if (query){
+    if (query) {
         const matchingBook = new RegExp(escapeRegExp(query), 'i');
         showingBooks = books.filter(
           book => matchingBook.test(book.title) || matchingBook.test(book.authors)
         )
+    }else{
+      showingBooks = books;
     }
 
     return (
@@ -58,13 +67,14 @@ class BookSearch extends React.Component {
             </div>
           )
         }
-
       </div>
     )
   }
 }
 
 BookSearch.propTypes = {
-  books: PropTypes.array.isRequired
+  books: PropTypes.array.isRequired,
+  onChangeBookShelf: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired
 }
 export default BookSearch;
