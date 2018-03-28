@@ -17,6 +17,7 @@ class BookSearch extends React.Component {
 
   _updateQuery(event) {
     this.setState({ query: event.target.value });
+    this.props.refreshSearch;
     this._debounceOnSearch(event.target.value);
   }
 
@@ -31,8 +32,6 @@ class BookSearch extends React.Component {
         showingBooks = books.filter(
           book => matchingBook.test(book.title) || matchingBook.test(book.authors)
         )
-    }else{
-      showingBooks = books;
     }
 
     return (
