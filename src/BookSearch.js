@@ -12,16 +12,14 @@ class BookSearch extends React.Component {
     this.state = {
       query: ''
     }
-    this._debounceOnSearch = debounce(this.props.onSearch,  2000);
+    this._debounceOnSearch = debounce(this.props.onSearch,  1000);
   }
 
   _updateQuery(event) {
     this.setState({ query: event.target.value });
-    this.props.refreshSearch;
     this._debounceOnSearch(event.target.value);
   }
 
-  // TODO: Comment on rendering
   render() {
     const { books } = this.props;
     const { query } = this.state;
@@ -30,7 +28,7 @@ class BookSearch extends React.Component {
     if (query) {
         const matchingBook = new RegExp(escapeRegExp(query), 'i');
         showingBooks = books.filter(
-          book => matchingBook.test(book.title) || matchingBook.test(book.authors)
+          book => matchingBook.test(book.title) || matchingBook.test(book.authors) || matchingBook.test(book.subtitle)
         )
     }
 
@@ -49,23 +47,21 @@ class BookSearch extends React.Component {
             onChange={ event => this._updateQuery(event) }
           />
         </div>
-        {
-          showingBooks && (
-            <div className='search-books-results'>
-              <div className='bookshelf'>
-                <div className='bookshelf-books'>
-                  <ol className='books-grid'>
-                    { showingBooks.map(book => (
-                      <li key={ book.id }>
-                        <Book book={ book } value={ book.shelf } onChangeBookShelf={ this.props.onChangeBookShelf }/>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
+        { showingBooks && (
+          <div className='search-books-results'>
+            <div className='bookshelf'>
+              <div className='bookshelf-books'>
+                <ol className='books-grid'>
+                  { showingBooks.map(book => (
+                    <li key={ book.id }>
+                      <Book book={ book } value={ book.shelf } onChangeBookShelf={ this.props.onChangeBookShelf }/>
+                    </li>
+                  ))}
+                </ol>
               </div>
             </div>
-          )
-        }
+          </div>
+        )}
       </div>
     )
   }

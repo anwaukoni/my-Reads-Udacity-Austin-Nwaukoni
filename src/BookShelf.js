@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import Book from './Book';
 
 function BookShelf(props) {
-
-// TODO: Comment on function
   const { books } = props;
   const currentlyReadingShelf = books.filter( book => book.shelf === 'currentlyReading');
   const wantToReadShelf = books.filter( book => book.shelf === 'wantToRead');
@@ -19,66 +17,60 @@ function BookShelf(props) {
           MyReads
         </h1>
       </div>
-      {
-        currentlyReadingShelf.length > 0 && (
-          <div className='bookshelf'>
-            <div className='bookshelf-title'>
-              <h2>
-                Currently Reading
-              </h2>
-            </div>
-            <div className='bookshelf-books'>
-              <ol className='books-grid'>
-                { currentlyReadingShelf.map(book => (
-                  <li key={ book.id }>
-                    <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
-                  </li>
-                ))}
-              </ol>
-            </div>
+      { currentlyReadingShelf.length > 0 && (
+        <div className='bookshelf'>
+          <div className='bookshelf-title'>
+            <h2>
+              Currently Reading
+            </h2>
           </div>
-        )
-      }
-      {
-        wantToReadShelf.length > 0 && (
-          <div className='bookshelf'>
-            <div className='bookshelf-title'>
-              <h2>
-                Want to Read
-              </h2>
-            </div>
-            <div className='bookshelf-books'>
-              <ol className='books-grid'>
-                { wantToReadShelf.map(book => (
-                  <li key={ book.id }>
-                    <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
-                  </li>
-                ))}
-              </ol>
-            </div>
+          <div className='bookshelf-books'>
+            <ol className='books-grid'>
+              { currentlyReadingShelf.map(book => (
+                <li key={ book.id }>
+                  <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
+                </li>
+              ))}
+            </ol>
           </div>
-        )
-      }
-      {
-        readShelf.length > 0 && (
-          <div className='bookshelf'>
-            <div className='bookshelf-title'>
-              <h2>
-                Read
-              </h2>
-            </div>
-            <div className='bookshelf-books'>
-              <ol className='books-grid'>
-                { readShelf.map(book => (
-                  <li key={ book.id }>
-                    <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
-                  </li>
-                ))}
-              </ol>
-            </div>
+        </div>
+      )}
+      { wantToReadShelf.length > 0 && (
+        <div className='bookshelf'>
+          <div className='bookshelf-title'>
+            <h2>
+              Want to Read
+            </h2>
           </div>
-        )
-      }
+          <div className='bookshelf-books'>
+            <ol className='books-grid'>
+              { wantToReadShelf.map(book => (
+                <li key={ book.id }>
+                  <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      )}
+      { readShelf.length > 0 && (
+        <div className='bookshelf'>
+          <div className='bookshelf-title'>
+            <h2>
+              Read
+            </h2>
+          </div>
+          <div className='bookshelf-books'>
+            <ol className='books-grid'>
+              { readShelf.map(book => (
+                <li key={ book.id }>
+                  <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      )}
       <div className='open-search'>
         <Link
           to='/search'/>

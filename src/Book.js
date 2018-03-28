@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// TODO: Comment on component
 class Book extends React.Component {
   constructor(props, context){
     super(props, context);
@@ -12,7 +11,6 @@ class Book extends React.Component {
     this._onChange = this._onChange.bind(this);
   }
 
-  // TODO: Comment on function
   _onChange(event){
     this.setState({value: event.target.value});
     this.props.onChangeBookShelf(this.props.book, event.target.value);
@@ -20,6 +18,7 @@ class Book extends React.Component {
 
   render() {
     const { book } = this.props;
+    const anonymousThumbnail = "https://vignette.wikia.nocookie.net/theslenderman/images/c/ce/Question-mark-face.jpg";
 
     return (
       <div className='book'>
@@ -27,7 +26,11 @@ class Book extends React.Component {
           <div className='book-cover' style={{
             width: 128,
             height: 188,
-            backgroundImage: `url(${book.imageLinks.thumbnail})`
+            backgroundImage: `url(${
+              book.imageLinks ?
+              book.imageLinks.thumbnail :
+              anonymousThumbnail
+            })`
           }}></div>
           <div className="book-shelf-changer">
             <select onChange={ this._onChange } value={this.state.value} >
@@ -39,9 +42,8 @@ class Book extends React.Component {
             </select>
           </div>
         </div>
-        <div className='book-title'>{ book.title }</div>
-        <div className='book-titel'>{ book.id }</div>
-        <div className='book-authors'>{ book.authors }</div>
+        <div className='book-title'>{ book.title ? book.title : 'Untitled'}</div>
+        <div className='book-authors'>{ book.authors ? book.authors : 'Anonymous Author' }</div>
       </div>
     )
   }
