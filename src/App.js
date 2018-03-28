@@ -41,8 +41,17 @@ class BooksApp extends React.Component {
           // check if the search term is included in  array of viable search terms
           // if (newBooksSearch.length > 0 ){
 
+
           const uniqueBooksList = newBooksSearch.filter(newBook => {
-            return catalogouedBooks.find(book => book.id !== newBook.id  )
+            return !(catalogouedBooks.find(book => {
+              if (book.id === newBook.id){
+                console.log('books the same');
+                return true;
+              }else{
+                console.log('books NOT same');
+                return false
+              }
+            }))
           })
 
           uniqueBooksList.map(book => book['shelf'] = 'none');
