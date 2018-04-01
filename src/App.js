@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI';
 
 import './App.css';
@@ -7,22 +7,16 @@ import './App.css';
 import BookSearch from './BookSearch';
 import BookShelf from './BookShelf';
 
-class BooksApp extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+class BooksApp extends Component {
 
-    this.state = {
-      books: [],
-    }
-    this._changeBookShelf = this._changeBookShelf.bind(this);
-    this._searchBooks = this._searchBooks.bind(this);
-  }
+
+  state = { books: []}
 
   componentDidMount() {
     BooksAPI.getAll().then(books => this.setState({ books: books }));
   }
 
-  _searchBooks(query) {
+  _searchBooks = (query) =>  {
     if ( query.length > 0){
       BooksAPI.getAll().then(books => this.setState({ books: books }))
 
@@ -55,14 +49,13 @@ class BooksApp extends React.Component {
     }
   }
 
-  _changeBookShelf(newBookState, newShelf) {
-    this.setState((prevState)=> {
+  _changeBookShelf = (newBookState, newShelf) => {
+    BooksAPI.update(newBookState, newShelf).then(() => this.setState((prevState)=> {
       let addNewShelf = prevState.books.find(prevBookState => prevBookState.id === newBookState.id);
       addNewShelf.shelf = newShelf;
 
       return addNewShelf;
-    });
-    BooksAPI.update(newBookState, newShelf);
+    }));
   }
 
   render() {

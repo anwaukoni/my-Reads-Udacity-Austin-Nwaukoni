@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
-import Book from './Book';
+import Shelf from './Shelf';
 
 function BookShelf(props) {
   const { books } = props;
@@ -18,58 +17,22 @@ function BookShelf(props) {
         </h1>
       </div>
       { currentlyReadingShelf.length > 0 && (
-        <div className='bookshelf'>
-          <div className='bookshelf-title'>
-            <h2>
-              Currently Reading
-            </h2>
-          </div>
-          <div className='bookshelf-books'>
-            <ol className='books-grid'>
-              { currentlyReadingShelf.map(book => (
-                <li key={ book.id }>
-                  <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
+        <Shelf
+          shelfName='currently Reading'
+          shelf={ currentlyReadingShelf }
+          onChangeBookShelf={ props.onChangeBookShelf }/>
       )}
       { wantToReadShelf.length > 0 && (
-        <div className='bookshelf'>
-          <div className='bookshelf-title'>
-            <h2>
-              Want to Read
-            </h2>
-          </div>
-          <div className='bookshelf-books'>
-            <ol className='books-grid'>
-              { wantToReadShelf.map(book => (
-                <li key={ book.id }>
-                  <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
+        <Shelf
+          shelfName='Want to Read'
+          shelf={ wantToReadShelf }
+          onChangeBookShelf={ props.onChangeBookShelf }/>
       )}
       { readShelf.length > 0 && (
-        <div className='bookshelf'>
-          <div className='bookshelf-title'>
-            <h2>
-              Read
-            </h2>
-          </div>
-          <div className='bookshelf-books'>
-            <ol className='books-grid'>
-              { readShelf.map(book => (
-                <li key={ book.id }>
-                  <Book book={ book } onChangeBookShelf={ props.onChangeBookShelf }/>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
+        <Shelf
+          shelfName='Read'
+          shelf={ readShelf }
+          onChangeBookShelf={ props.onChangeBookShelf }/>
       )}
       <div className='open-search'>
         <Link
